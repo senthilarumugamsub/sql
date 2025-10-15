@@ -1,0 +1,106 @@
+
+BOOKSTORE LOGICAL MODEL (ERD)
+
+--------------------------------------------------
+TABLE: employee
+--------------------------------------------------
+employee_id      INT          PK
+first_name       VARCHAR(50)
+last_name        VARCHAR(50)
+email            VARCHAR(100)
+job_title        VARCHAR(50)
+
+--------------------------------------------------
+TABLE: employee_shift
+--------------------------------------------------
+employee_shift_id INT          PK
+employee_id       INT          FK → employee(employee_id)
+shift_date        DATE         FK → date(full_date)
+shift_type        VARCHAR(10)
+start_time        TIME
+end_time          TIME
+
+--------------------------------------------------
+TABLE: customer
+--------------------------------------------------
+customer_id       INT          PK
+first_name        VARCHAR(50)
+last_name         VARCHAR(50)
+email             VARCHAR(100)
+
+--------------------------------------------------
+TABLE: book
+--------------------------------------------------
+book_id           INT          PK
+isbn              VARCHAR(20)
+title             VARCHAR(100)
+author_first_name VARCHAR(50)
+author_last_name  VARCHAR(50)
+genre             VARCHAR(30)
+price             FLOAT
+stock_available   INT
+
+--------------------------------------------------
+TABLE: order
+--------------------------------------------------
+order_id          INT          PK
+order_date        DATE         FK → date(full_date)
+total_amount      FLOAT
+employee_id       INT          FK → employee(employee_id)
+customer_id       INT          FK → customer(customer_id)
+
+--------------------------------------------------
+TABLE: sales
+--------------------------------------------------
+sales_id          INT          PK
+order_id          INT          FK → order(order_id)
+book_id           INT          FK → book(book_id)
+quantity          INT
+unit_price        FLOAT
+
+--------------------------------------------------
+TABLE: date
+--------------------------------------------------
+full_date         DATE         PK
+day               INT
+month             INT
+month_name        VARCHAR(20)
+quarter           INT
+year              INT
+weekday_name      VARCHAR(20)
+
+--------------------------------------------------
+TABLE: customer_address_type1
+--------------------------------------------------
+customer_id       INT          PK, FK → customer(customer_id)
+street_address    VARCHAR(150)
+city              VARCHAR(50)
+postal_code       VARCHAR(10)
+province          VARCHAR(50)
+country           VARCHAR(50)
+
+--------------------------------------------------
+TABLE: customer_address_type2
+--------------------------------------------------
+address_id        INT          PK
+customer_id       INT          FK → customer(customer_id)
+street_address    VARCHAR(150)
+city              VARCHAR(50)
+postal_code       VARCHAR(10)
+province          VARCHAR(50)
+country           VARCHAR(50)
+start_date        DATE
+end_date          DATE
+
+--------------------------------------------------
+RELATIONSHIPS SUMMARY
+--------------------------------------------------
+1. employee (1) ——< employee_shift (M)
+2. employee (1) ——< order (M)
+3. customer (1) ——< order (M)
+4. book (1) ——< sales (M)
+5. order (1) ——< sales (M)
+6. date (1) ——< order (M)
+7. date (1) ——< employee_shift (M)
+8. customer (1) ——1 customer_address_type1 (1)
+9. customer (1) ——< customer_address_type2 (M)

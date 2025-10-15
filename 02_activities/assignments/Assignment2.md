@@ -54,7 +54,17 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
 ```
-Your answer...
+Type 1
+Table name customer_address
+columns customer_id (Primary key), street_address, city, postal_code, province, country
+
+Type 2
+Table name customer_address
+columns address_id (Primary Key), customer_id, street_address, city, postal_code, province, country, start_date, end_date
+
+In Type 1, when customer moves, the existing row is updated and old address is lost. Hence as long as there is only address changes, the number of rows remain same.
+
+In type two, when customer moves, a new row with new address_id is created with corresponding customer_id is created. Thus the old address is retained. The number of rows keep increasing for every change in address of customer. 
 ```
 
 ***
